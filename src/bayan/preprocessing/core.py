@@ -1,21 +1,60 @@
 """Lab 1 starter: versioned bilingual preprocessing for Bayan."""
 
+import re
+
+
 PREPROC_VERSION = "1.2.0"
+
+
+PHONE_RE = re.compile(
+    r"(?<!\d)(?:\+?966|0)5\d{8}(?!\d)"
+)
+
+NATIONAL_ID_RE = re.compile(
+    r"(?<!\d)[12]\d{9}(?!\d)"
+)
 
 
 def normalize(text: str) -> str:
     """Return deterministic Bayan normalisation while preserving task signal."""
-    # TODO(Lab 1): implement the course normalisation contract.
-    raise NotImplementedError("Implement normalize() in Lab 1")
+
+    # Remove Arabic tatweel / kashida
+    text = text.replace("ـ", "")
+
+    # Reduce 3 or more repeated characters to 2
+    # Examples:
+    # هلووو -> هلوو
+    # GOOD!!! -> GOOD!!
+    text = re.sub(r"(.)\1{2,}", r"\1\1", text)
+
+    # Collapse spaces, tabs, and newlines into one space
+    text = re.sub(r"\s+", " ", text)
+
+    # Remove leading and trailing whitespace
+    text = text.strip()
+
+    return text
 
 
 def mask_pii(text: str) -> str:
     """Mask supported phone numbers and Saudi national-ID-shaped values."""
-    # TODO(Lab 1): replace supported PII with <PHONE> / <NATIONAL_ID>.
-    raise NotImplementedError("Implement mask_pii() in Lab 1")
+
+    # Mask Saudi phone numbers
+    text = PHONE_RE.sub("<PHONE>", text)
+
+    # Mask Saudi national IDs
+    text = NATIONAL_ID_RE.sub("<NATIONAL_ID>", text)
+
+    return text
 
 
 def preprocess(text: str) -> str:
     """Apply the shared train/eval/serve preprocessing contract."""
-    # TODO(Lab 1): compose masking and normalisation in the intended order.
-    raise NotImplementedError("Implement preprocess() in Lab 1")
+
+    # First mask personal information
+    text = mask_pii(text)
+
+    # Then normalize the text
+    text = normalize(text)
+
+    return text
