@@ -100,10 +100,27 @@ Observations:
 - Empty sentence strings were not returned.
 
 ## Lab 2 — Parameter audit
+**Why is the embedding share different?**  
+mBERT has a much larger multilingual vocabulary, so a larger share of its parameters is spent on the embedding matrix; this is the multilingual vocabulary tax.
+### Attention Diagnostics
+
+* Scaled dot-product attention matched the PyTorch reference with a maximum absolute difference of `0.0000002384`, which is below the required `1e-6` tolerance.
+* The causal attention matrix was lower triangular, and the future-token attention mass was `0.0`.
+* This masking pattern corresponds to decoder-style causal attention.
+* The diagnostic batch contained 5 Bayan examples and 27 PAD tokens.
+* With the correct attention mask, average attention mass assigned to `[PAD]` tokens was `0.00000000`.
+* Without the attention mask, average `[PAD]` attention mass increased to `0.07816089`.
+* This confirms pad-attention leakage when the attention mask is omitted.
+* The strongest adjacency-looking head was Layer 5, Head 10, with adjacency mass `0.941012`.
+* The strongest `[SEP]` sink behaviour was observed in Layer 1, Head 5, with `[SEP]` attention mass `0.273421`.
+
+**Conclusion:** Attention masks are essential when batching padded sequences because omitting the mask allows the model to allocate non-zero attention to meaningless `[PAD]` positions.
+
+
 | Checkpoint | Total params | Embeddings % | Other notes |
 |---|---:|---:|---|
-| mBERT | | | |
-| CAMeLBERT | | | |
+| mBERT | 177,853,440 | 51.84% | More than half of the model parameters are in embeddings. Attention = 15.94%, FFN = 31.86%. |
+| CAMeLBERT | 109,081,344 | 21.48% | Smaller embedding share than mBERT. Attention = 25.99%, FFN = 51.95%. |
 
 ## Lab 4 — Dialect audit
 - Distribution:

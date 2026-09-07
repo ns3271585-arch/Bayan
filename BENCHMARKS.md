@@ -3,7 +3,6 @@
 > Fill these tables from **your own runs**. Do not copy course reference numbers.
 
 ## Lab 1 — Tokenizer audit
-## Lab 1 — Tokenizer audit
 
 | Tokenizer  | AR fertility | EN fertility | AR p95 len | EN p95 len | AR UNK rate |
 | ---------- | -----------: | -----------: | ---------: | ---------: | ----------: |
@@ -13,11 +12,25 @@
 | DistilBERT |        4.527 |        1.298 |       47.0 |       21.0 |     0.00215 |
 
 * Golden preprocessing: 25 / 25 passed
-* * PII masking recall: 60 / 60 = 100%
+* PII masking recall: 60 / 60 = 100%
 
+## Lab 2 — Attention diagnostics
 
-- Golden preprocessing: ___ / 25 passed
-- PII masking recall: ___ / 60 = ___%
+| Metric                                       |           Result |
+| -------------------------------------------- | ---------------: |
+| Maximum absolute difference vs PyTorch       |     0.0000002384 |
+| Numerical equivalence tolerance              |    < 1e-6 — PASS |
+| Future-token attention mass with causal mask |              0.0 |
+| PAD attention mass with correct mask         |       0.00000000 |
+| PAD attention mass without mask              |       0.07816089 |
+| Best adjacency-looking head                  | Layer 5, Head 10 |
+| Adjacency mass                               |         0.941012 |
+| Strongest `[SEP]` sink head                  |  Layer 1, Head 5 |
+| `[SEP]` attention mass                       |         0.273421 |
+
+* Causal attention matrix: lower triangular — PASS
+* Pad-attention leakage: detected when the attention mask is omitted
+
 
 ## Lab 3 — Models
 | Model | Metric | Validation | Frozen test | Train time |
