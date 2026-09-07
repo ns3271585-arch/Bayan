@@ -85,6 +85,19 @@ For each one record: example, why it matters, and clean/preserve/task-dependent.
 - Example:
 - Why it matters:
 - Decision:
+### Sentence Segmentation Spot Check
+
+I tested the sentence segmentation pipeline on five long bilingual/Arabic-style examples, including a numbered-list complaint.
+
+Observations:
+
+- Arabic full stop punctuation was segmented correctly.
+- Arabic question marks `؟` were handled correctly.
+- English punctuation such as `.`, `!`, and `?` was also handled correctly.
+-- Numbered-list complaints were segmented, but the sentencizer treated list markers such as `1.`, `2.`, and `3.` as separate sentences. This is a known limitation of the current lightweight segmentation approach.
+- PII masking occurred before segmentation, so phone numbers and national IDs were replaced before the text was split.
+- Emoji were preserved after preprocessing and sentence segmentation.
+- Empty sentence strings were not returned.
 
 ## Lab 2 — Parameter audit
 | Checkpoint | Total params | Embeddings % | Other notes |

@@ -13,7 +13,7 @@
 | DistilBERT |        4.527 |        1.298 |       47.0 |       21.0 |     0.00215 |
 
 * Golden preprocessing: 25 / 25 passed
-* PII recall test: passed
+* * PII masking recall: 60 / 60 = 100%
 
 
 - Golden preprocessing: ___ / 25 passed

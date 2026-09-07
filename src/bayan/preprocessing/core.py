@@ -1,7 +1,7 @@
 """Lab 1 starter: versioned bilingual preprocessing for Bayan."""
 
 import re
-
+import unicodedata
 
 PREPROC_VERSION = "1.2.0"
 
@@ -17,6 +17,8 @@ NATIONAL_ID_RE = re.compile(
 
 def normalize(text: str) -> str:
     """Return deterministic Bayan normalisation while preserving task signal."""
+    # Normalize Unicode forms
+    text = unicodedata.normalize("NFKC", text)
 
     # Remove Arabic tatweel / kashida
     text = text.replace("ـ", "")
