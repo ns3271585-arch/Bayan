@@ -38,7 +38,7 @@
 |---|---|---:|---:|---:|
 | TF-IDF + LinearSVC | macro-F1 | 1.0000 | 1.0000 | CPU baseline |
 | XLM-R topic classifier | macro-F1 | 1.0000 | 1.0000 | not captured in initial run |
-| NER | entity-F1 | | | |
+| NER | entity-F1 | 1.0000 | 1.0000 | Colab T4 |
 | QA | span/null smoke | | | |
 
 - Topic-classifier delta over TF-IDF baseline: +0.0000
