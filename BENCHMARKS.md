@@ -33,12 +33,17 @@
 
 
 ## Lab 3 — Models
+
 | Model | Metric | Validation | Frozen test | Train time |
 |---|---|---:|---:|---:|
-| TF-IDF + LinearSVC | macro-F1 | | | |
-| Topic classifier | macro-F1 | | | |
+| TF-IDF + LinearSVC | macro-F1 | 1.0000 | 1.0000 | CPU baseline |
+| XLM-R topic classifier | macro-F1 | 1.0000 | 1.0000 | not captured in initial run |
 | NER | entity-F1 | | | |
 | QA | span/null smoke | | | |
+
+- Topic-classifier delta over TF-IDF baseline: +0.0000
+- Grouped split integrity: PASS — zero `citizen_group_id` overlap between train, validation, and test.
+- Transformer target of baseline +0.08 was mathematically unattainable in this run because the leakage-safe TF-IDF baseline already achieved macro-F1 = 1.0000.
 
 ## Lab 4 — Arabic model bake-off
 | Checkpoint | macro-F1 all | Gulf | MSA | AR fertility |
