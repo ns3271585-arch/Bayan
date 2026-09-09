@@ -48,12 +48,31 @@
 - The requested transformer target of baseline +0.08 was mathematically unattainable in this run because the leakage-safe TF-IDF baseline already achieved macro-F1 = 1.0000, while macro-F1 cannot exceed 1.0000.
 - Results above reflect the latest documented Google Colab run in `notebooks/00_colab_setup.ipynb`.
 
-## Lab 4 — Arabic model bake-off
-| Checkpoint | macro-F1 all | Gulf | MSA | AR fertility |
+## Lab 4 — Arabic pipeline and model bake-off
+
+### NER clitic segmentation
+
+| NER setting | Frozen test LOCATION recall |
+|---|---:|
+| Baseline (without segmentation) | 1.0000 |
+| CAMeL Tools d3tok segmentation | 1.0000 |
+| LOCATION recall delta | +0.0000 |
+
+- The requested improvement of about +4 LOCATION recall points was not attainable on this supplied dataset because the baseline recall was already 1.0000, which is the maximum possible recall.
+- The d3tok segmentation path preserved LOCATION recall without degradation.
+
+### Arabic model bake-off
+
+| Checkpoint | macro-F1 all Arabic | Gulf | MSA | AR fertility |
 |---|---:|---:|---:|---:|
-| multilingual incumbent | | | | |
-| Arabic dialect-aware | | | | |
-| optional third model | | | | |
+| XLM-R incumbent | 1.0000 | 1.0000 | 1.0000 | 1.685 |
+| CAMeLBERT-mix | 1.0000 | 1.0000 | 1.0000 | 1.412 |
+| CAMeLBERT-DA | 1.0000 | 1.0000 | 1.0000 | 1.412 |
+
+- All three checkpoints tied at 1.0000 macro-F1 on the Gulf slice.
+- The requested +4-point Gulf improvement over the Day-2 incumbent was not attainable because the incumbent already achieved the maximum possible macro-F1 of 1.0000.
+- CAMeLBERT-mix and CAMeLBERT-DA achieved lower Arabic token fertility (1.412) than XLM-R (1.685).
+- No Arabic checkpoint demonstrated a measurable Gulf macro-F1 advantage over the incumbent in this run.
 
 ## Lab 5 — Search
 | Configuration | recall@10 | MRR@10 | p50 latency/query |

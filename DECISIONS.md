@@ -15,11 +15,11 @@
 
 
 ## arabic-model
-- Incumbent:
-- Candidate:
-- All/Gulf/MSA evidence:
-- CI-backed verdict:
-- Segmentation contract:
+- Incumbent: XLM-R (`xlm-roberta-base`).
+- Candidate: CAMeLBERT-DA (`CAMeL-Lab/bert-base-arabic-camelbert-da`). CAMeLBERT-mix tied with it on all measured Lab 4 metrics.
+- All/Gulf/MSA evidence: XLM-R = 1.0000 / 1.0000 / 1.0000 with Arabic fertility 1.685; CAMeLBERT-mix = 1.0000 / 1.0000 / 1.0000 with fertility 1.412; CAMeLBERT-DA = 1.0000 / 1.0000 / 1.0000 with fertility 1.412.
+- CI-backed verdict: No confidence intervals were computed in Lab 4, so there is no statistically supported quality winner yet. Retain XLM-R as the incumbent for now; CAMeLBERT-DA remains an Arabic-specific candidate because it preserved the same Gulf macro-F1 while using fewer tokens per Arabic word. Confirm the decision with slice confidence intervals in Lab 6.
+- Segmentation contract: CAMeL Tools `d3tok` is used for Arabic clitic segmentation. The frozen-test LOCATION recall was 1.0000 without segmentation and 1.0000 with d3tok, giving a measured delta of +0.0000. The requested +4-point gain was unattainable because the baseline recall was already at the maximum value of 1.0000.
 
 ## search-min-score
 - Threshold:
