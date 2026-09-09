@@ -35,15 +35,18 @@
 ## Lab 3 — Models
 
 | Model | Metric | Validation | Frozen test | Train time |
-|---|---|---:|---:|---:|
-| TF-IDF + LinearSVC | macro-F1 | 1.0000 | 1.0000 | CPU baseline |
-| XLM-R topic classifier | macro-F1 | 1.0000 | 1.0000 | not captured in initial run |
-| NER | entity-F1 | 1.0000 | 1.0000 | Colab T4 |
-| QA | span/null smoke | 9/9 | 3/3 | pretrained SQuAD2 |
-- QA smoke target: PASS — overall 12/12
-- Topic-classifier delta over TF-IDF baseline: +0.0000
+|---|---|---:|---:|---|
+| TF-IDF + LinearSVC | macro-F1 | 1.0000 | 1.0000 | not captured (CPU) |
+| XLM-R topic classifier | macro-F1 | 1.0000 | 0.9992 | not captured (Colab T4) |
+| NER | entity-F1 | 1.0000 | 1.0000 | not captured (Colab T4) |
+| QA | span/null smoke | 9/9 | 3/3 | N/A (pretrained SQuAD2) |
+
+- QA smoke target: PASS — overall 12/12.
 - Grouped split integrity: PASS — zero `citizen_group_id` overlap between train, validation, and test.
-- Transformer target of baseline +0.08 was mathematically unattainable in this run because the leakage-safe TF-IDF baseline already achieved macro-F1 = 1.0000.
+- Topic-classifier validation delta over TF-IDF baseline: +0.0000.
+- Topic-classifier frozen-test delta over TF-IDF baseline: -0.0008.
+- The requested transformer target of baseline +0.08 was mathematically unattainable in this run because the leakage-safe TF-IDF baseline already achieved macro-F1 = 1.0000, while macro-F1 cannot exceed 1.0000.
+- Results above reflect the latest documented Google Colab run in `notebooks/00_colab_setup.ipynb`.
 
 ## Lab 4 — Arabic model bake-off
 | Checkpoint | macro-F1 all | Gulf | MSA | AR fertility |

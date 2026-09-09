@@ -10,3 +10,4 @@ artifacts/*
 *.bin
 *.safetensors
 runs/
+*.egg-info/
