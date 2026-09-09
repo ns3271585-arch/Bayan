@@ -9,6 +9,7 @@ import numpy as np
 from datasets import Dataset
 from seqeval.metrics import (
     accuracy_score,
+    classification_report,
     f1_score,
     precision_score,
     recall_score,
@@ -22,6 +23,7 @@ from transformers import (
 )
 
 from bayan.models.ner import align_labels
+from bayan.preprocessing.arabic import segment
 
 
 CHECKPOINT = "xlm-roberta-base"
@@ -37,6 +39,11 @@ def parse_args():
         default="artifacts/ner",
         help="Where to save the trained NER artefact.",
     )
+    parser.add_argument(
+        "--use-segmentation",
+         action="store_true",
+        help="Apply CAMeL Tools d3tok segmentation before NER tokenization.",
+)
 
     return parser.parse_args()
 
@@ -104,7 +111,56 @@ def split_data(tokens, tags):
         "validation": select(validation_ids),
         "test": select(test_ids),
     }
+def segment_ner_data(tokens, tags, id2label, label2id):
+    """Apply d3tok segmentation while preserving NER entity labels.
 
+    Prefix/suffix clitics receive O. The lexical stem keeps the
+    original entity label.
+    """
+    o_id = label2id["O"]
+
+    segmented_sentences = []
+    segmented_tags = []
+
+    for sentence_tokens, sentence_tags in zip(tokens, tags):
+        new_tokens = []
+        new_tags = []
+
+        for token, tag_id in zip(sentence_tokens, sentence_tags):
+            pieces = segment(token)
+
+            # Fallback in case CAMeL returns nothing.
+            if not pieces:
+                pieces = [token]
+
+            # No actual split: preserve token and label exactly.
+            if len(pieces) == 1:
+                new_tokens.append(pieces[0])
+                new_tags.append(tag_id)
+                continue
+
+            # Find the lexical stem: a piece that is not a clitic marker.
+            stem_index = next(
+                (
+                    i
+                    for i, piece in enumerate(pieces)
+                    if not piece.endswith("+") and not piece.startswith("+")
+                ),
+                len(pieces) - 1,
+            )
+
+            for i, piece in enumerate(pieces):
+                new_tokens.append(piece)
+
+                if i == stem_index:
+                    new_tags.append(tag_id)
+                else:
+                    new_tags.append(o_id)
+
+        segmented_sentences.append(new_tokens)
+        segmented_tags.append(new_tags)
+
+    return segmented_sentences, segmented_tags
 
 def main():
     args = parse_args()
@@ -155,6 +211,21 @@ def main():
         [label2id[label] for label in sentence]
         for sentence in string_labels
     ]
+    if args.use_segmentation:
+        print()
+        print("Applying CAMeL Tools d3tok segmentation...")
+
+        sentences, numeric_labels = segment_ner_data(
+            sentences,
+            numeric_labels,
+            id2label,
+            label2id,
+        )
+
+        print("Segmentation: ENABLED")
+    else:
+        print()
+        print("Segmentation: DISABLED")
 
     # 3. Train / validation / frozen test split
     splits = split_data(
@@ -275,6 +346,20 @@ def main():
             true_labels.append(
                 label_sequence
             )
+        report = classification_report(
+            true_labels,
+            true_predictions,
+            output_dict=True,
+            zero_division=0,
+        )
+
+        location_recall = report.get(
+            "LOCATION",
+            {},
+        ).get(
+            "recall",
+            0.0,
+        )
 
         return {
             "precision": precision_score(
@@ -293,6 +378,7 @@ def main():
                 true_labels,
                 true_predictions,
             ),
+            "location_recall": float(location_recall),
         }
 
     # 6. XLM-R token classifier
@@ -440,11 +526,19 @@ def main():
         "Validation recall:",
         f"{validation_metrics['validation_recall']:.4f}",
     )
+    print(
+        "Validation LOCATION recall:",
+        f"{validation_metrics['validation_location_recall']:.4f}",
+)
 
     print(
         "Frozen test accuracy:",
         f"{test_metrics['test_accuracy']:.4f}",
     )
+    print(
+     "Frozen test LOCATION recall:",
+      f"{test_metrics['test_location_recall']:.4f}",
+)
 
     print()
     print(

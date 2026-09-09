@@ -123,5 +123,5 @@ mBERT has a much larger multilingual vocabulary, so a larger share of its parame
 | CAMeLBERT | 109,081,344 | 21.48% | Smaller embedding share than mBERT. Attention = 25.99%, FFN = 51.95%. |
 
 ## Lab 4 — Dialect audit
-- Distribution:
-- One-sentence implication for MSA-only evaluation:
+- Distribution: Gulf = 4800/7200 (66.67%), MSA = 2400/7200 (33.33%).
+- One-sentence implication for MSA-only evaluation: Evaluating only on MSA would not represent the Bayan Arabic distribution because 66.67% of the Arabic feedback belongs to the Gulf slice.
