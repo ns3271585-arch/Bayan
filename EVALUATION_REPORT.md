@@ -1,7 +1,9 @@
 # EVALUATION REPORT — Bayan
 
 ## Executive headline
-TODO(Lab 6): two sentences: aggregate summary + the risk/quality slice that matters.
+Validation accuracy is 87.5% overall, with a clear language gap: Arabic accuracy is 75.0% while English accuracy is 100.0%.
+
+The largest quality risk is the `parks` class, which has 0.0% accuracy on 300 validation examples, making it the highest-priority slice for error analysis and remediation.
 
 ## Sliced metrics with bootstrap CIs
 TODO

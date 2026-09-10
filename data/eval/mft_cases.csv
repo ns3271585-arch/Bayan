@@ -1,0 +1,17 @@
+test_id,lang,text,expected_topic
+MFT-001,en,Road Maintenance,roads
+MFT-002,en,Street Lighting,lighting
+MFT-003,en,Waste Collection,waste
+MFT-004,en,Water Supply,water
+MFT-005,en,Billing Review,billing
+MFT-006,en,Digital Identity,digital_services
+MFT-007,en,Licence Renewal,licensing
+MFT-008,en,Park Maintenance,parks
+MFT-009,ar,صيانة الطرق,roads
+MFT-010,ar,الإنارة,lighting
+MFT-011,ar,جمع النفايات,waste
+MFT-012,ar,خدمات المياه,water
+MFT-013,ar,مراجعة الفواتير,billing
+MFT-014,ar,الهوية الرقمية,digital_services
+MFT-015,ar,تجديد الرخص,licensing
+MFT-016,ar,صيانة الحدائق,parks
