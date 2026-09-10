@@ -77,9 +77,9 @@
 ## Lab 5 — Search
 | Configuration | recall@10 | MRR@10 | p50 latency/query |
 |---|---:|---:|---:|
-| bi-encoder only | 0.0256 | 0.0175 | 21.86 ms |
-| + cross-encoder rerank | 0.0026 | 0.0015 | 432.40 ms |
-| cross-lingual slice (cross-language gold, reranked) | 0.0000 | 0.0000 | 432.40 ms |
+| bi-encoder only | 0.0256 | 0.0175 | 18.35 ms |
+| + cross-encoder rerank | 0.0026 | 0.0015 | 331.28 ms |
+| cross-lingual slice (cross-language gold, reranked) | 0.0000 | 0.0000 | 331.28 ms |
 
 - no-answer empty-correct: 20 / 20 at min_score=-3.0
 - threshold rationale: observed top reranker scores ranged from -5.0148 for no-answer queries to -1.3641 or higher for answerable queries; -3.0 lies between these observed ranges. The supplied no-answer queries are identical, so this threshold result should be interpreted with that limitation.
