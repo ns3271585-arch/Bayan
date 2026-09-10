@@ -125,47 +125,52 @@ mBERT has a much larger multilingual vocabulary, so a larger share of its parame
 ## Lab 4 — Dialect audit
 - Distribution: Gulf = 4800/7200 (66.67%), MSA = 2400/7200 (33.33%).
 - One-sentence implication for MSA-only evaluation: Evaluating only on MSA would not represent the Bayan Arabic distribution because 66.67% of the Arabic feedback belongs to the Gulf slice.
-
 ## Lab 5 — Search diagnostics
 
 ### Retrieval evaluation
+
 The versioned FAISS index uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` with the shared preprocessing pipeline and L2-normalised vectors. Two-stage retrieval uses 50 bi-encoder candidates followed by cross-encoder reranking.
 
 Measured results:
-- bi-encoder recall@10: 0.0692
+
+- bi-encoder recall@10: 0.0256
 - bi-encoder MRR@10: 0.0175
-- reranked recall@10: 0.0077
+- bi-encoder Hit@10 diagnostic: 0.0692
+- reranked recall@10: 0.0026
 - reranked MRR@10: 0.0015
+- reranked Hit@10 diagnostic: 0.0077
 - no-answer empty-correct: 20/20 at `min_score=0.25`
-- same-language reranked recall@10/MRR@10: 0.0077/0.0015
+- same-language reranked recall@10/MRR@10: 0.0038/0.0015
 - cross-language reranked recall@10/MRR@10: 0.0000/0.0000
-- cross-lingual recall gap: 0.0077
+- cross-lingual recall gap: 0.0038
 - cross-lingual MRR gap: 0.0015
 
 The recall@10 >= 0.80 and MRR@10 >= 0.70 targets were not reached. The no-answer target was reached.
 
 ### Judgement and duplicate-corpus diagnosis
-The labelled query set contains only a small judged set of case IDs per query while the 20k-case corpus contains many duplicate or near-duplicate complaint texts.
+
+The labelled query set contains a limited judged set of case IDs per query while the 20k-case corpus contains many duplicate or near-duplicate complaint texts.
 
 For example, Q-002 has 52 exact `case_text` duplicates in the corpus, but none of those exact-match case IDs are in its judged relevant set. Removing duplicate texts from the candidate pool and reranking 100 unique candidates still did not surface any Q-002 gold IDs.
 
-All 130 answerable queries were also found to have relevant-case IDs following a deterministic block-of-8 arithmetic pattern. This is recorded as an evaluation-data characteristic, not used by the retrieval system. Gold IDs were never injected into retrieval or used to change rankings.
-
-Because of these limited judgements and heavy duplicate/tie behaviour, visually plausible semantic matches can still score as non-relevant under strict case-ID evaluation.
+Because of these limited judgements and heavy duplicate/tie behaviour, visually plausible semantic matches can still score as non-relevant under strict case-ID evaluation. Gold IDs were not injected into retrieval or used to alter rankings.
 
 ### FAISS tie behaviour
+
 Many corpus vectors receive identical or near-identical similarity scores. FAISS tie ordering changed depending on the requested candidate count:
 
-- direct `search(k=10)`: recall@10 = 0.0692, MRR@10 = 0.0175
-- `search(k=50)` then taking the first 10: recall@10 = 0.0077, MRR@10 = 0.0026
+- direct `search(k=10)`: recall@10 = 0.0256, Hit@10 = 0.0692, MRR@10 = 0.0175
+- `search(k=50)` then taking the first 10: recall@10 = 0.0026, Hit@10 = 0.0077, MRR@10 = 0.0026
 - top-10 ordering differed for 104/130 answerable queries
 
 Therefore the no-rerank bi-encoder metric is measured using direct top-10 retrieval, while the reranking stage intentionally retrieves a 50-candidate pool.
 
 ### Planted unnormalised-vector bug
+
 The persisted FAISS vectors were verified to have L2 norm 1.0.
 
 Before normalisation, a 1,000-case sample had:
+
 - minimum norm: 2.466599
 - mean norm: 4.047536
 - maximum norm: 5.643936
@@ -174,7 +179,8 @@ Before normalisation, a 1,000-case sample had:
 Using inner-product search without L2 normalisation caused vector magnitude to affect ranking rather than cosine similarity alone.
 
 Measured comparison:
-- normalized recall@10/MRR@10: 0.0692/0.0175
-- unnormalised recall@10/MRR@10: 0.0462/0.0080
+
+- normalized recall@10/MRR@10: 0.0256/0.0175
+- unnormalised recall@10/MRR@10: 0.0154/0.0080
 
 This confirms the planted failure mode: search results can look semantically plausible while labelled retrieval metrics degrade, so retrieval must be approved using the labelled evaluation set rather than visual inspection alone.

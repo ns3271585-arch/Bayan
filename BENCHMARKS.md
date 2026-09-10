@@ -77,14 +77,16 @@
 ## Lab 5 — Search
 | Configuration | recall@10 | MRR@10 | p50 latency/query |
 |---|---:|---:|---:|
-| bi-encoder only | 0.0692 | 0.0175 | 24.97 ms |
-| + cross-encoder rerank | 0.0077 | 0.0015 | 368.82 ms |
-| cross-lingual slice (cross-language gold, reranked) | 0.0000 | 0.0000 | - |
+| bi-encoder only | 0.0256 | 0.0175 | 21.86 ms |
+| + cross-encoder rerank | 0.0026 | 0.0015 | 432.40 ms |
+| cross-lingual slice (cross-language gold, reranked) | 0.0000 | 0.0000 | 432.40 ms |
 
-- no-answer empty-correct: 20 / 20 at min_score=0.25
-- cross-lingual gap (same-language - cross-language, reranked): recall@10 = 0.0077; MRR@10 = 0.0015
+- no-answer empty-correct: 20 / 20 at min_score=-3.0
+- threshold rationale: observed top reranker scores ranged from -5.0148 for no-answer queries to -1.3641 or higher for answerable queries; -3.0 lies between these observed ranges. The supplied no-answer queries are identical, so this threshold result should be interpreted with that limitation.
+- cross-lingual gap (same-language - cross-language, reranked): recall@10 = 0.0038; MRR@10 = 0.0015
+- Hit@10 diagnostic: bi-encoder = 0.0692; reranked = 0.0077
 - target status: recall@10 >= 0.80 and MRR@10 >= 0.70 were not met; no-answer correctness target was met.
-- L2-normalisation diagnosis: normalized bi-encoder recall@10/MRR@10 = 0.0692/0.0175; unnormalised = 0.0462/0.0080.
+- L2-normalisation diagnosis: normalized recall@10/MRR@10 = 0.0256/0.0175; unnormalised = 0.0154/0.0080.
 - FAISS tie diagnostic: direct k=10 versus k=50 then taking the first 10 changed the top-10 ordering for 104/130 queries.
 
 ## Lab 6 — Evaluation

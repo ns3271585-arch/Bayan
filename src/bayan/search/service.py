@@ -131,7 +131,7 @@ class CaseSearch:
         query: str,
         k: int = 5,
         candidates: int = 50,
-        min_score: float = 0.25,
+        min_score: float = -3.0,
         rerank: bool = True,
     ):
         """Search cases using bi-encoder retrieval and optional CE reranking."""

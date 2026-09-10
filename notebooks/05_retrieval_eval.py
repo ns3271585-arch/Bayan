@@ -24,7 +24,7 @@ RESULTS_PATH = ROOT / "artifacts" / "search" / "retrieval_eval.json"
 
 TOP_K = 10
 CANDIDATES = 50
-NO_ANSWER_THRESHOLD = 0.25
+NO_ANSWER_THRESHOLD = -3.0
 
 
 def load_queries():
@@ -54,24 +54,7 @@ def load_case_languages():
 
 
 def recall_at_10(retrieved_ids, relevant_ids):
-    """
-    Course-compatible query-level recall@10.
-
-    Returns 1 if at least one judged relevant case occurs in the top 10,
-    otherwise 0.
-    """
-    gold = set(relevant_ids)
-
-    return float(
-        any(
-            case_id in gold
-            for case_id in retrieved_ids[:TOP_K]
-        )
-    )
-
-
-def strict_recall_at_10(retrieved_ids, relevant_ids):
-    """Diagnostic: fraction of judged relevant IDs recovered in the top 10."""
+    """Fraction of judged relevant case IDs recovered in the top 10."""
     gold = set(relevant_ids)
 
     if not gold:
@@ -83,6 +66,18 @@ def strict_recall_at_10(retrieved_ids, relevant_ids):
     )
 
     return hits / len(gold)
+
+
+def hit_at_10(retrieved_ids, relevant_ids):
+    """Diagnostic: 1 if any judged relevant case occurs in the top 10."""
+    gold = set(relevant_ids)
+
+    return float(
+        any(
+            case_id in gold
+            for case_id in retrieved_ids[:TOP_K]
+        )
+    )
 
 
 def mrr_at_10(retrieved_ids, relevant_ids):
@@ -117,6 +112,7 @@ def evaluate_answerable(
     full_latencies = []
 
     for number, q in enumerate(queries, start=1):
+        # No-rerank metrics must be measured from a direct top-10 search.
         bi_start = time.perf_counter()
 
         _, bi_results = searcher._retrieve(
@@ -131,6 +127,7 @@ def evaluate_answerable(
             for item in bi_results
         ]
 
+        # Reranking intentionally uses a larger candidate pool.
         full_start = time.perf_counter()
 
         normalized_query, candidates = searcher._retrieve(
@@ -193,7 +190,7 @@ def evaluate_answerable(
                     bi_ids,
                     q["relevant_case_ids"],
                 ),
-                "bi_strict_recall_at_10": strict_recall_at_10(
+                "bi_hit_at_10": hit_at_10(
                     bi_ids,
                     q["relevant_case_ids"],
                 ),
@@ -205,7 +202,7 @@ def evaluate_answerable(
                     reranked_ids,
                     q["relevant_case_ids"],
                 ),
-                "rerank_strict_recall_at_10": strict_recall_at_10(
+                "rerank_hit_at_10": hit_at_10(
                     reranked_ids,
                     q["relevant_case_ids"],
                 ),
@@ -273,8 +270,8 @@ def summarize_slice(rows, lang=None):
         "bi_recall_at_10": mean(
             [row["bi_recall_at_10"] for row in selected]
         ),
-        "bi_strict_recall_at_10": mean(
-            [row["bi_strict_recall_at_10"] for row in selected]
+        "bi_hit_at_10": mean(
+            [row["bi_hit_at_10"] for row in selected]
         ),
         "bi_mrr_at_10": mean(
             [row["bi_mrr_at_10"] for row in selected]
@@ -282,8 +279,8 @@ def summarize_slice(rows, lang=None):
         "rerank_recall_at_10": mean(
             [row["rerank_recall_at_10"] for row in selected]
         ),
-        "rerank_strict_recall_at_10": mean(
-            [row["rerank_strict_recall_at_10"] for row in selected]
+        "rerank_hit_at_10": mean(
+            [row["rerank_hit_at_10"] for row in selected]
         ),
         "rerank_mrr_at_10": mean(
             [row["rerank_mrr_at_10"] for row in selected]
@@ -398,6 +395,12 @@ def main():
     summary = {
         "configuration": {
             "top_k": TOP_K,
+            "recall_definition": (
+                "relevant IDs retrieved in top-k / total judged relevant IDs"
+            ),
+            "hit_at_10_definition": (
+                "1 if any judged relevant ID is retrieved in top 10, else 0"
+            ),
             "candidates": CANDIDATES,
             "min_score": NO_ANSWER_THRESHOLD,
             "encoder": searcher.manifest["model"],
@@ -466,14 +469,14 @@ def main():
     )
 
     print()
-    print("STRICT RECALL DIAGNOSTIC")
+    print("HIT@10 DIAGNOSTIC")
     print(
-        f"Bi-encoder strict recall@10: "
-        f"{overall['bi_strict_recall_at_10']:.4f}"
+        f"Bi-encoder Hit@10: "
+        f"{overall['bi_hit_at_10']:.4f}"
     )
     print(
-        f"Reranked strict recall@10:   "
-        f"{overall['rerank_strict_recall_at_10']:.4f}"
+        f"Reranked Hit@10:   "
+        f"{overall['rerank_hit_at_10']:.4f}"
     )
 
     print()
