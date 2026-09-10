@@ -1,0 +1,121 @@
+﻿error_no,feedback_id,lang,dialect_region,length_bucket,y_true,y_pred,confidence,text,error_category,manual_note
+1,FB-008128,ar,MSA,medium,parks,roads,0.79,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+2,FB-010648,ar,MSA,medium,parks,roads,0.63,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة 😡,Label ambiguity,park walkway overlaps semantically with roads
+3,FB-006088,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+4,FB-000368,ar,MSA,medium,parks,roads,0.87,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+5,FB-009328,ar,MSA,short,parks,roads,0.79,ألعاب الأطفال في حديقة جدة تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+6,FB-009048,ar,MSA,medium,parks,roads,0.63,الممر في حديقة الدمام غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+7,FB-007848,ar,MSA,short,parks,roads,0.63,ألعأب الأطفال في حديقة الدمام تحتاج صيانة,Arabic orthographic variation,misspelling: ألعأب
+8,FB-004368,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي العليا تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+9,FB-000208,ar,MSA,medium,parks,roads,0.55,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+10,FB-007008,ar,MSA,medium,parks,roads,0.55,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة 😡,Systematic class confusion,clear playground-maintenance example predicted as roads
+11,FB-009488,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+12,FB-002288,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+13,FB-008728,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة حي النرجس,Systematic class confusion,clear park irrigation example predicted as roads
+14,FB-001808,ar,MSA,medium,parks,roads,0.55,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة 😡,Systematic class confusion,clear playground-maintenance example predicted as roads
+15,FB-007288,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+16,FB-008848,ar,MSA,medium,parks,roads,0.63,الممر في حديقة حي النرجس غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+17,FB-011568,ar,MSA,short,parks,roads,0.87,الري متوقف في حديقة شارع التحلية,Systematic class confusion,clear park irrigation example predicted as roads
+18,FB-008448,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة حي النرجس,Systematic class confusion,clear park irrigation example predicted as roads
+19,FB-005928,ar,MSA,medium,parks,roads,0.79,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+20,FB-006608,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة جدة,Systematic class confusion,clear park irrigation example predicted as roads
+21,FB-003128,ar,MSA,short,parks,roads,0.79,ألعاب الأطفال في حديقة الرياض تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+22,FB-004528,ar,MSA,medium,parks,roads,0.79,الممر في حديقة الدمام غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+23,FB-009968,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+24,FB-010008,ar,MSA,short,parks,roads,0.55,ألعاب الأطفال في حديقة جدة تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+25,FB-004168,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي العليا تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+26,FB-001688,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة حي النرجس,Systematic class confusion,clear park irrigation example predicted as roads
+27,FB-011248,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+28,FB-011808,ar,MSA,medium,parks,roads,0.55,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+29,FB-006288,ar,MSA,medium,parks,roads,0.71,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+30,FB-009528,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة جدة,Systematic class confusion,clear park irrigation example predicted as roads
+31,FB-000688,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة الدمام,Systematic class confusion,clear park irrigation example predicted as roads
+32,FB-006568,ar,MSA,short,parks,roads,0.87,الري متوقف في حديقة الدمام,Systematic class confusion,clear park irrigation example predicted as roads
+33,FB-001328,ar,MSA,medium,parks,roads,0.79,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+34,FB-000968,ar,MSA,medium,parks,roads,0.87,الممر في حديقة حي العليا غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+35,FB-008608,ar,MSA,medium,parks,roads,0.55,ألعأب الأطفال في حديقة شارع التحلية تحتاج صيانة,Arabic orthographic variation,misspelling: ألعأب
+36,FB-004768,ar,MSA,medium,parks,roads,0.87,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+37,FB-000288,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة الرياض تحتاج صيانة <NATIONAL_ID>,Systematic class confusion,clear playground-maintenance example predicted as roads
+38,FB-003608,ar,MSA,medium,parks,roads,0.55,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+39,FB-001848,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة شارع التحلية,Systematic class confusion,clear park irrigation example predicted as roads
+40,FB-002928,ar,MSA,medium,parks,roads,0.79,الممر في حديقة شارع التحلية غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+41,FB-003728,ar,MSA,medium,parks,roads,0.79,الممر في حديقة حي العليا غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+42,FB-003048,ar,MSA,medium,parks,roads,0.63,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+43,FB-011448,ar,MSA,medium,parks,roads,0.63,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+44,FB-002408,ar,MSA,medium,parks,roads,0.55,لووووسمحت الممر في حديقة الرياض غير مناسب للكراسي المتحركة,Arabic orthographic variation,elongated spelling: لووووسمحت
+45,FB-003088,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+46,FB-002528,ar,MSA,short,parks,roads,0.79,ألعأب الأطفال في حديقة الدمام تحتاج صيانة,Arabic orthographic variation,misspelling: ألعأب
+47,FB-009368,ar,MSA,medium,parks,roads,0.87,لووووسمحت ألممر في حديقة حي العليا غير مناسب للكراسي المتحركة,Arabic orthographic variation,elongated/orthographic variation in لووووسمحت وألممر
+48,FB-009168,ar,MSA,medium,parks,roads,0.87,الممر في حديقة حي الياسمين غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+49,FB-004448,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة حي العليا,Systematic class confusion,clear park irrigation example predicted as roads
+50,FB-009248,ar,MSA,medium,parks,roads,0.63,الممر في حديقة شارع التحلية غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+51,FB-007208,ar,MSA,medium,parks,roads,0.55,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+52,FB-005768,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+53,FB-009568,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة طريق الملك فهد تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+54,FB-003008,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة الدمام  ,Systematic class confusion,clear park irrigation example predicted as roads
+55,FB-011888,ar,MSA,medium,parks,roads,0.71,الممر في حديقة الرياض غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+56,FB-011128,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة الدمام,Systematic class confusion,clear park irrigation example predicted as roads
+57,FB-003888,ar,MSA,medium,parks,roads,0.71,الممر في حديقة حي العليا غير مناسب للكراسي المتحركة 😡,Label ambiguity,park walkway overlaps semantically with roads
+58,FB-003688,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة طريق الملك فهد تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+59,FB-007688,ar,MSA,short,parks,roads,0.71,ألعاب الأطفال في حديقة جدة تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+60,FB-001008,ar,MSA,medium,parks,roads,0.55,ألممر في حديقة الدمام غير مناسب للكراسي المتحركة,Arabic orthographic variation,orthographic variation: ألممر
+61,FB-009288,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة <PHONE>,Systematic class confusion,clear playground-maintenance example predicted as roads
+62,FB-002368,ar,MSA,short,parks,roads,0.87,الري متوقف في حديقة جدة,Systematic class confusion,clear park irrigation example predicted as roads
+63,FB-000248,ar,MSA,medium,parks,roads,0.63,ألعأب الأطفال في حديقة الدمام تحتاج صيانة 😡,Arabic orthographic variation,misspelling: ألعأب
+64,FB-007408,ar,MSA,medium,parks,roads,0.55,ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+65,FB-006928,ar,MSA,medium,parks,roads,0.79,الممر في حديقة حي النرجس غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+66,FB-001208,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة الدمام,Systematic class confusion,clear park irrigation example predicted as roads
+67,FB-000888,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة شارع التحلية,Systematic class confusion,clear park irrigation example predicted as roads
+68,FB-010248,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة حي النرجس,Systematic class confusion,clear park irrigation example predicted as roads
+69,FB-002248,ar,MSA,medium,parks,roads,0.63,الممر في حديقة الدمام غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+70,FB-007448,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة طريق الملك فهد,Systematic class confusion,clear park irrigation example predicted as roads
+71,FB-004328,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة حي العليا,Systematic class confusion,clear park irrigation example predicted as roads
+72,FB-005048,ar,MSA,medium,parks,roads,0.63,ألعاب الأطفال في حديقة طريق الملك فهد تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+73,FB-009208,ar,MSA,medium,parks,roads,0.55,الممر في حديقة جدة غير مناسب للكراسي المتحركة  ,Label ambiguity,park walkway overlaps semantically with roads
+74,FB-007728,ar,MSA,medium,parks,roads,0.79,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+75,FB-005168,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+76,FB-011288,ar,MSA,medium,parks,roads,0.71,الممر في حديقة الرياض غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+77,FB-003288,ar,MSA,short,parks,roads,0.71,ألري متوقف في حديقة الدمام,Arabic orthographic variation,orthographic variation: ألري
+78,FB-003368,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة حي الياسمين تحتاج صيانة 😡 <PHONE>,Systematic class confusion,clear playground-maintenance example predicted as roads
+79,FB-002648,ar,MSA,medium,parks,roads,0.63,ألعاب الأطفال في حديقة حي النرجس تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+80,FB-011528,ar,MSA,medium,parks,roads,0.79,الممر في حديقة حي العليا غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+81,FB-006528,ar,MSA,medium,parks,roads,0.79,الممر في حديقة شارع التحلية غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+82,FB-006168,ar,MSA,medium,parks,roads,0.87,الممر في حديقة شارع التحلية غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+83,FB-000768,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة الرياض تحتاج صيانة 😡,Systematic class confusion,clear playground-maintenance example predicted as roads
+84,FB-004968,ar,MSA,short,parks,roads,0.87,ألعاب الأطفال في حديقة الدمام تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+85,FB-003168,ar,MSA,medium,parks,roads,0.87,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+86,FB-004568,ar,MSA,medium,parks,roads,0.87,ألعاب الأطفال في حديقة طريق الملك فهد تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+87,FB-004728,ar,MSA,medium,parks,roads,0.79,لووووسمحت الممر في حديقة جدة غير مناسب للكراسي المتحركة,Arabic orthographic variation,elongated spelling: لووووسمحت
+88,FB-002888,ar,MSA,medium,parks,roads,0.71,الممر في حديقة حي الياسمين غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+89,FB-000608,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة طريق الملك فهد,Systematic class confusion,clear park irrigation example predicted as roads
+90,FB-000408,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة حي العليا <PHONE>,Systematic class confusion,clear park irrigation example predicted as roads
+91,FB-007768,ar,MSA,short,parks,roads,0.87,ألعاب الأطفال في حديقة الرياض تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+92,FB-004048,ar,MSA,short,parks,roads,0.63,ألعأب الأطفال في حديقة الرياض تحتاج صيانة,Arabic orthographic variation,misspelling: ألعأب
+93,FB-002728,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+94,FB-008968,ar,MSA,short,parks,roads,0.87,ألعاب الأطفال في حديقة الرياض تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+95,FB-001488,ar,MSA,short,parks,roads,0.71,ألعاب الأطفال في حديقة الدمام تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+96,FB-000648,ar,MSA,medium,parks,roads,0.63,الممر في حديقة شارع التحلية غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+97,FB-007168,ar,MSA,short,parks,roads,0.87,ألعاب الأطفال في حديقة الرياض تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+98,FB-005888,ar,MSA,medium,parks,roads,0.71,لووووسمحت الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Arabic orthographic variation,elongated spelling: لووووسمحت
+99,FB-010968,ar,MSA,short,parks,roads,0.87,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+100,FB-002688,ar,MSA,medium,parks,roads,0.71,ألعاب الأطفال في حديقة حي العليا تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+101,FB-009128,ar,MSA,medium,parks,roads,0.79,ألعاب الأطفال في حديقة حي النرجس تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+102,FB-002768,ar,MSA,medium,parks,roads,0.87,الممر في حديقة الدمام غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+103,FB-001248,ar,MSA,medium,parks,roads,0.63,لووووسمحت ألعاب الأطفال في حديقة شارع التحلية تحتاج صيانة,Arabic orthographic variation,elongated spelling: لووووسمحت
+104,FB-007328,ar,MSA,medium,parks,roads,0.79,الممر في حديقة طريق الملك فهد غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+105,FB-010608,ar,MSA,medium,parks,roads,0.55,الممر في حديقة الرياض غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+106,FB-009008,ar,MSA,medium,parks,roads,0.55,الممر في حديقة حي النرجس غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+107,FB-005608,ar,MSA,short,parks,roads,0.55,الري متوقف في حديقة حي العليا,Systematic class confusion,clear park irrigation example predicted as roads
+108,FB-000728,ar,MSA,short,parks,roads,0.79,ألعاب الأطفال في حديقة الرياض تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+109,FB-007248,ar,MSA,medium,parks,roads,0.63,الممر في حديقة حي النرجس غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+110,FB-003848,ar,MSA,medium,parks,roads,0.63,ألعاب الأطفال في حديقة حي النرجس تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+111,FB-005288,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة شارع التحلية,Systematic class confusion,clear park irrigation example predicted as roads
+112,FB-010488,ar,MSA,short,parks,roads,0.71,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+113,FB-003448,ar,MSA,medium,parks,roads,0.63,الممر في حديقة الرياض غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+114,FB-009928,ar,MSA,short,parks,roads,0.79,الري متوقف في حديقة الرياض,Systematic class confusion,clear park irrigation example predicted as roads
+115,FB-009808,ar,MSA,short,parks,roads,0.55,ألعاب الأطفال في حديقة الدمام تحتاج صيانة,Systematic class confusion,clear playground-maintenance example predicted as roads
+116,FB-004648,ar,MSA,medium,parks,roads,0.63,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+117,FB-005848,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة جدة,Systematic class confusion,clear park irrigation example predicted as roads
+118,FB-011688,ar,MSA,medium,parks,roads,0.71,لووووسمحت الممر في حديقة الدمام غير مناسب للكراسي المتحركة 😡  ,Arabic orthographic variation,elongated spelling: لووووسمحت
+119,FB-007888,ar,MSA,medium,parks,roads,0.71,الممر في حديقة جدة غير مناسب للكراسي المتحركة,Label ambiguity,park walkway overlaps semantically with roads
+120,FB-008248,ar,MSA,short,parks,roads,0.63,الري متوقف في حديقة حي العليا,Systematic class confusion,clear park irrigation example predicted as roads

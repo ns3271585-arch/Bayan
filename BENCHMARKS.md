@@ -90,14 +90,15 @@
 - FAISS tie diagnostic: direct k=10 versus k=50 then taking the first 10 changed the top-10 ordering for 104/130 queries.
 
 ## Lab 6 — Evaluation
+
 | Model | Aggregate macro-F1 [CI] | Gulf [CI] | Invariance pass | MFT pass |
 |---|---|---|---:|---:|
-| topic classifier | | | | |
-| dialect-aware | | | | |
+| topic classifier (XLM-R) | 1.0000 [1.0000, 1.0000] | 1.0000 [1.0000, 1.0000] | 70.00% | 93.75% |
+| dialect-aware (CAMeLBERT-DA) | 1.0000 [1.0000, 1.0000] | 1.0000 [1.0000, 1.0000] | 70.00% | 31.25% |
 
-- paired comparison verdict:
-- error taxonomy top categories:
-- top-3 prioritised fixes:
+- paired comparison verdict: XLM-R and CAMeLBERT-DA are tied on the frozen Arabic and Gulf macro-F1 evaluations; paired bootstrap delta is 0.0000 [0.0000, 0.0000]. Retain XLM-R as the incumbent because the quality comparison does not justify replacement.
+- error taxonomy top categories: Systematic class confusion — 67/120 (55.8%); Label ambiguity — 40/120 (33.3%); Arabic orthographic variation — 13/120 (10.8%).
+- top-3 prioritised fixes: (1) target `parks -> roads` confusion, estimated upper-bound validation accuracy delta +7.0 pp; (2) improve contextual disambiguation of park walkways, +4.2 pp; (3) strengthen Arabic orthographic normalisation and augmentation, +1.4 pp.
 
 ## Lab 7 — Optimisation ladder
 | Rung | p50 | p99 | quality metric / paired Δ | Artefact size |
