@@ -425,7 +425,7 @@ def main():
         train_dataset=train_dataset,
         eval_dataset=validation_dataset,
         data_collator=data_collator,
-        processing_class=tokenizer,
+        tokenizer=tokenizer,
         compute_metrics=compute_metrics,
     )
 

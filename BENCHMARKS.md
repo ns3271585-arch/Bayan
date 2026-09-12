@@ -233,3 +233,40 @@ The current selected classifier is:
 This choice will be finalised after the required labelled quality-tax,
 NER comparison, startup-canary, serving-contract and official HTTP-load
 evidence are completed.
+
+
+### Lab 7 — Paired FP32 vs INT8 quality check
+
+The quantised models were evaluated against their FP32 ONNX rollback
+artefacts on the labelled frozen test sets.
+
+#### Classifier
+
+| Metric | FP32 | INT8 |
+|---|---:|---:|
+| Frozen-test samples | 1208 | 1208 |
+| Macro-F1 | 1.000000 | 1.000000 |
+| Accuracy | 1.000000 | 1.000000 |
+
+- Macro-F1 quality tax: **0.0000 points**
+- 95% bootstrap CI for quality tax: **[0.0000, 0.0000] points**
+- FP32/INT8 prediction agreement: **100.00%**
+- Lab target: classifier quality tax <= **1 macro-F1 point**
+- Result: **PASS**
+
+#### NER
+
+| Metric | FP32 | INT8 |
+|---|---:|---:|
+| Frozen-test sentences | 400 | 400 |
+| Evaluated labelled tokens | 4343 | 4343 |
+| Entity-F1 | 1.000000 | 1.000000 |
+| Token accuracy | 1.000000 | 1.000000 |
+
+- Entity-F1 quality tax: **0.0000 points**
+- 95% bootstrap CI for quality tax: **[0.0000, 0.0000] points**
+- FP32/INT8 labelled-token agreement: **100.00%**
+
+The NER INT8 artefact therefore shows no measured quality degradation on
+the frozen test set. The final NER serving decision will also consider
+its measured CPU latency, as required by Lab 7.
