@@ -7,6 +7,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from bayan.serving.classifier import TopicClassifier
+from bayan.serving.canaries import run_startup_canaries
 
 
 class ClassifyRequest(BaseModel):
@@ -27,25 +28,34 @@ class ClassifyResponse(BaseModel):
     confidence: float
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Load the Lab 7 classifier once and run a startup canary."""
+def get_classifier():
+    """Return the shared classifier, loading it once when needed."""
 
-    classifier = TopicClassifier(
-        threads=4,
+    classifier = getattr(
+        app.state,
+        "classifier",
+        None,
     )
 
-    canary = classifier.classify(
-        "إنارة الشارع لا تعمل"
-    )
-
-    if not canary.get("topic"):
-        raise RuntimeError(
-            "Bayan classifier startup canary failed."
+    if classifier is None:
+        classifier = TopicClassifier(
+            threads=4,
         )
 
-    app.state.classifier = classifier
-    app.state.canary = canary
+        run_startup_canaries(
+            classifier,
+        )
+
+        app.state.classifier = classifier
+
+    return classifier
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Load the Lab 7 classifier and run startup canaries."""
+
+    get_classifier()
 
     yield
 
@@ -76,7 +86,7 @@ def classify(payload: ClassifyRequest):
     """Classify one Arabic or English feedback message."""
 
     try:
-        return app.state.classifier.classify(
+        return get_classifier().classify(
             payload.text
         )
 

@@ -270,3 +270,42 @@ artefacts on the labelled frozen test sets.
 The NER INT8 artefact therefore shows no measured quality degradation on
 the frozen test set. The final NER serving decision will also consider
 its measured CPU latency, as required by Lab 7.
+
+
+### Lab 7 — Official HTTP load test
+
+The final FastAPI classifier service was tested with `hey` using the
+required Lab 7 load profile:
+
+- Duration: **60 seconds**
+- Concurrent clients: **16**
+- Endpoint: `POST /v1/classify`
+- Serving model: **ONNX dynamic INT8 classifier**
+- CPU thread setting: **OMP_NUM_THREADS=4**
+- Colab host available logical CPUs: **2**
+- Startup canaries: **GREEN**
+- Serving contract: **2 passed**
+
+| Metric | Measured |
+|---|---:|
+| Total requests | 1759 |
+| Successful HTTP 200 | 1759 |
+| Errors | 0 |
+| Requests/sec | 29.1732 |
+| Average latency | 547.3 ms |
+| p50 | 494.0 ms |
+| p90 | 799.2 ms |
+| p95 | 843.7 ms |
+| p99 | 930.9 ms |
+| Slowest | 1090.7 ms |
+
+Lab HTTP target:
+
+- p99 <= **40 ms**: **NOT MET on this Colab CPU**
+- 0 errors: **PASS**
+- startup canaries green: **PASS**
+
+The absolute HTTP latency target was not met on the measured Colab
+environment. The host exposed only two logical CPUs while the lab
+thread configuration was pinned to four threads. The measured result
+is reported without modification.
