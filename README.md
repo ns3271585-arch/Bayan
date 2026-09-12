@@ -201,6 +201,148 @@ Automated evaluation tests:
 
 ---
 
+### Lab 7 — CPU Optimisation and Model Serving
+
+Lab 7 adds CPU-oriented inference optimisation and a production-style FastAPI serving path for the Bayan topic classifier.
+
+Implemented work includes:
+
+- CPU inference benchmarking with four pinned inference threads
+- Dynamic padding and sequence-length optimisation
+- Classifier export from PyTorch to ONNX FP32
+- Dynamic INT8 quantisation
+- FP32 rollback artefact retention
+- Paired FP32/INT8 quality evaluation
+- Bootstrap confidence intervals for quantisation quality tax
+- FastAPI `POST /v1/classify`
+- `GET /health`
+- Startup compatibility and behaviour canaries
+- HTTP load testing with 16 concurrent clients for 60 seconds
+
+#### Classifier CPU Benchmark
+
+The production benchmark uses the supplied `data/serving/bench_mix.npy` mixture with 2,000 examples.
+
+| Runtime | Input strategy | p50 | p99 |
+|---|---|---:|---:|
+| PyTorch FP32 | padded to 512 | 1693.32 ms | 3038.94 ms |
+| PyTorch FP32 | dynamic, max 128 | 120.92 ms | 397.69 ms |
+| ONNX FP32 | dynamic, max 128 | 151.67 ms | 382.99 ms |
+| ONNX INT8 | dynamic, max 128 | 96.76 ms | 297.19 ms |
+
+The ONNX INT8 classifier reduced p99 latency by approximately **10.23x** relative to the original padded-512 PyTorch baseline.
+
+The absolute Lab 7 bare-inference target of **p99 <= 25 ms** was not reached on the measured Colab CPU environment.
+
+#### Classifier Artefact Size
+
+| Artefact | Size |
+|---|---:|
+| ONNX FP32 | 1060.91 MB |
+| ONNX INT8 | 265.93 MB |
+
+Dynamic INT8 quantisation reduced the classifier artefact size by approximately **74.93%**.
+
+#### Classifier Quantisation Quality
+
+The labelled frozen test set contains **1,208 examples**.
+
+| Metric | ONNX FP32 | ONNX INT8 |
+|---|---:|---:|
+| Macro-F1 | 1.000000 | 1.000000 |
+| Accuracy | 1.000000 | 1.000000 |
+
+Measured classifier quantisation evidence:
+
+```text
+Macro-F1 quality tax: 0.0000 points
+95% bootstrap CI:     [0.0000, 0.0000] points
+FP32/INT8 agreement:  100.00%
+```
+
+The Lab 7 classifier quality-tax target of at most one macro-F1 point is satisfied.
+
+#### NER Quantisation Quality
+
+The segmented XLM-R NER model was evaluated on the deterministic frozen test split used during training.
+
+```text
+Frozen-test sentences:              400
+Evaluated labelled tokens:          4343
+FP32 entity-F1:                     1.000000
+INT8 entity-F1:                     1.000000
+Entity-F1 quality tax:              0.0000 points
+95% bootstrap CI:                   [0.0000, 0.0000] points
+FP32/INT8 labelled-token agreement: 100.00%
+```
+
+The quantised NER model showed no measured quality degradation on the frozen test set.
+
+#### FastAPI Serving
+
+The classifier is exposed through:
+
+```text
+GET  /health
+POST /v1/classify
+```
+
+The production classifier path uses:
+
+- Shared Bayan preprocessing
+- XLM-R tokenizer
+- ONNX Runtime CPU execution
+- Dynamic INT8 classifier
+- Maximum sequence length of 128
+- Four inference threads
+
+Startup canaries validate required serving artefacts, model metadata, label mappings, tokenizer and configuration hashes, deterministic preprocessing, CAMeL Tools `d3tok` segmentation behaviour, and a pinned Arabic classifier behaviour check.
+
+Observed startup result:
+
+```text
+STARTUP CANARIES: GREEN
+```
+
+Serving-contract tests:
+
+```text
+2 passed
+```
+
+Health check:
+
+```text
+HTTP 200
+{"status":"ready","model":"ONNX INT8 topic classifier","threads":4}
+```
+
+#### Official HTTP Load Test
+
+The FastAPI endpoint was tested with `hey` using the required Lab 7 profile.
+
+```text
+Duration:             60 seconds
+Concurrent clients:   16
+Successful responses: 1759
+HTTP errors:          0
+Requests/second:      29.1732
+Average latency:      547.3 ms
+p50:                  494.0 ms
+p90:                  799.2 ms
+p95:                  843.7 ms
+p99:                  930.9 ms
+```
+
+The zero-error requirement and startup-canary requirement passed.
+
+The HTTP target of **p99 <= 40 ms** was not reached on the measured Colab environment. The benchmark host exposed only **2 logical CPUs** while the Lab 7 inference configuration was pinned to four threads. The measured latency is reported without modification.
+
+Detailed optimisation and serving evidence is retained in `BENCHMARKS.md`.
+
+---
+
+
 ## Lab 6 Validation Results
 
 The validation prediction set contains:
@@ -594,6 +736,7 @@ Lab 3: Completed
 Lab 4: Completed
 Lab 5: Completed
 Lab 6: Completed
+Lab 7: Serving and classifier optimisation implemented
 ```
 
 Lab 6 final checkpoint:
