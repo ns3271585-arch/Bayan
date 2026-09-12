@@ -111,3 +111,125 @@
 - HTTP p99, 16 concurrent:
 - classifier quantisation decision:
 - NER quantisation decision:
+
+
+---
+
+## Lab 7 — CPU Inference Optimisation and Serving
+
+### Benchmark methodology
+
+Lab 7 latency measurements were collected on a CPU runtime with the
+CPU thread count pinned to **4 threads**.
+
+The supplied production serving mix was used:
+
+`data/serving/bench_mix.npy`
+
+- Samples: **2,000**
+- Warm-up requests were excluded.
+- Model loading was excluded.
+- Tokenization was performed before the timer and therefore excluded.
+- Reported latency is **model inference latency only**.
+- GPU latency was not used as Lab 7 evidence.
+
+### Optimisation ladder
+
+| Configuration | Samples | Mean (ms) | p50 (ms) | p99 (ms) |
+|---|---:|---:|---:|---:|
+| PyTorch FP32 — padded 512 | 2000 | 1941.57 | 1693.32 | 3038.94 |
+| PyTorch FP32 — dynamic <=128 | 2000 | 140.98 | 120.92 | 397.69 |
+| ONNX FP32 — dynamic <=128 | 2000 | 176.85 | 151.67 | 382.99 |
+| **ONNX INT8 — dynamic <=128** | **2000** | **114.02** | **96.76** | **297.19** |
+
+### Optimisation observations
+
+Dynamic sequence length was the largest single latency improvement.
+Replacing fixed padding to length 512 with dynamic sequences capped at
+128 reduced unnecessary computation substantially.
+
+ONNX FP32 did not improve mean or p50 latency over the PyTorch dynamic
+configuration on this CPU environment. It did, however, slightly improve
+p99 latency.
+
+The final ONNX INT8 configuration achieved the best overall latency:
+
+- Mean: **114.02 ms**
+- p50: **96.76 ms**
+- p99: **297.19 ms**
+
+Compared with the original PyTorch FP32 padded-512 baseline:
+
+- Mean speed-up: approximately **17.03x**
+- p50 speed-up: approximately **17.50x**
+- p99 speed-up: approximately **10.23x**
+
+### Model size
+
+| Artefact | Approximate size |
+|---|---:|
+| ONNX FP32 | 1.1 GB |
+| ONNX INT8 | 266 MB |
+
+The INT8 artefact is approximately **4.1x smaller** than ONNX FP32.
+
+### Correctness / quantisation parity
+
+ONNX FP32 and ONNX INT8 predictions were compared over the complete
+2,000-sample production benchmark mix.
+
+| Check | Result |
+|---|---:|
+| Samples checked | 2000 |
+| Prediction matches | 2000 |
+| Prediction mismatches | 0 |
+| Prediction agreement | **100.00%** |
+| Maximum absolute logit difference | 2.12650514 |
+
+This is prediction agreement evidence and is not a replacement for the
+required labelled macro-F1 quality-tax measurement.
+
+### FastAPI serving smoke tests
+
+The Lab 7 classifier is exposed through:
+
+- `GET /health`
+- `POST /v1/classify`
+
+| Test | HTTP status | Result |
+|---|---:|---|
+| Health endpoint | 200 | ready |
+| Arabic classification | 200 | lighting |
+| English classification | 200 | lighting |
+| Empty text validation | 422 | correctly rejected |
+
+### Preliminary API load test
+
+A preliminary local load test was performed with:
+
+- Requests: **100**
+- Concurrency: **4**
+- Warm-up: **10 requests**
+
+| Metric | Result |
+|---|---:|
+| Successful requests | **100** |
+| Failed requests | **0** |
+| Total time | 4.74 s |
+| Throughput | **21.08 requests/s** |
+| Mean response latency | 186.30 ms |
+| p50 response latency | 183.86 ms |
+| p99 response latency | 244.78 ms |
+
+This preliminary test does **not** replace the official Lab 7 `hey`
+load test at 16 concurrent clients for 60 seconds.
+
+### Current classifier production choice
+
+The current selected classifier is:
+
+**ONNX INT8 + dynamic sequence length <=128 + CPUExecutionProvider**
+
+This choice will be finalised after the required labelled quality-tax,
+NER comparison, startup-canary, serving-contract and official HTTP-load
+evidence are completed.
